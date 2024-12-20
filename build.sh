@@ -2,7 +2,13 @@
 
 set -e
 
-# Step 0: db ディレクトリの存在確認または作成
+# Step 0: .envファイルチェック / db ディレクトリの存在確認または作成
+if [ ! -f ../.env ]; then
+  echo "Error: .env file not found in project root!"
+  echo "Please create a .env file before building."
+  exit 1
+fi
+
 if [ ! -d ./db ]; then
   echo "db directory does not exist. Creating it..."
   mkdir -p ./db
