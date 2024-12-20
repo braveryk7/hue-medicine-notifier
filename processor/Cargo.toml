@@ -1,0 +1,16 @@
+[package]
+name = "hue_medicine_notifier"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sqlx = { version = "0.8.2", features = ["sqlite", "runtime-tokio-native-tls", "chrono"] }
+chrono = { version = "0.4", features = ["serde"] }
+tokio = { version = "1.42.0", features = ["full"] }
+reqwest = { version = "0.12.9", features = ["json"] }
+serde_json = "1.0.133"
+dotenv = "0.15"
+futures = "0.3"
+
+[target.x86_64-unknown-linux-musl]
+rustflags = ["-C", "target-feature=+crt-static"]

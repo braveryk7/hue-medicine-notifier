@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  lightId      String   @map("light_id")
+  lightType    String   @map("light_type")
+  utcOffset    Int      @map("utc_offset")
+  registeredAt DateTime @default(now()) @map("registered_at")
+  isDeleted    Boolean  @default(false) @map("is_deleted")
+  plans        Plan[]
+}
+
+model Plan {
+  id               Int      @id @default(autoincrement())
+  userId           Int      @map("user_id")
+  name             String
+  timeOfDay        Int      @map("time_of_day")
+  isActive         Boolean  @default(true) @map("is_active")
+  xyX              Float?   @map("xy_x")
+  xyY              Float?   @map("xy_y")
+  brightness       Int
+  colorTemperature Int?     @map("color_temperature")
+  rgb              String
+  note             String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  user         User          @relation(fields: [userId], references: [id])
+  tasks        Task[]
+  medicineTags MedicineTag[] @relation("PlanMedicineTags")
+}
+
+model Task {
+  id               Int       @id @default(autoincrement())
+  planId           Int       @map("plan_id")
+  date             Int
+  isCompleted      Boolean   @default(false) @map("is_completed")
+  completedAt      DateTime? @map("completed_at")
+  lightActionCount Int       @map("light_action_count")
+
+  plan Plan @relation(fields: [planId], references: [id])
+}
+
+model MedicineTag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  plans Plan[] @relation("PlanMedicineTags")
+
+  @@map("medicine_tag")
+}

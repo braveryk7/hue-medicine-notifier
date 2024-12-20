@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "52000:52000"
+    environment:
+      - DATABASE_URL=file:/data/app.db
+    volumes:
+      - ./db:/data
+
+  processor:
+    build:
+      context: ./
+      dockerfile: ./processor/Dockerfile
+    environment:
+      - DATABASE_URL=file:/data/app.db
+    volumes:
+      - ./db:/data
+    depends_on:
+      - web

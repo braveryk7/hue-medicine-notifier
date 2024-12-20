@@ -1,0 +1,9 @@
+*/target
+**/*.rs.bk
+**/*.rs~
+
+.env
+/node_modules
+/cert
+*.db
+*.db-journal
