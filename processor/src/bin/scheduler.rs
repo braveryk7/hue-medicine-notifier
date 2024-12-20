@@ -15,18 +15,12 @@ struct Plan {
     time_of_day: i32,
 }
 
-#[derive(Debug)]
-struct Task {
-    plan_id: i32,
-}
-
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
 
     let pool = connection::db().await?;
 
-    // `User` に `utc_offset` を追加
     let users: Vec<User> = query_as!(
         User,
         r#"
@@ -63,27 +57,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 plan.id, plan.time_of_day
             );
 
-            // `user.utc_offset` を Duration に変換
             let user_offset = Duration::minutes(user.utc_offset.into());
             let now = Utc::now();
             let today_user_time = (now + user_offset).naive_utc().date();
 
-            // `time_of_day` の日付補正を含む計算
             let mut days_offset = 0;
             let mut total_minutes = plan.time_of_day;
 
             if total_minutes < 0 {
-                days_offset -= 1; // 前日に遡る
-                total_minutes += 24 * 60; // 1日分を加算して正規化
+                days_offset -= 1;
+                total_minutes += 24 * 60
             }
 
             let hours = total_minutes / 60;
             let minutes = total_minutes % 60;
 
-            // 日付補正
             let adjusted_date = today_user_time + Duration::days(days_offset);
 
-            // 登録するタスクの時刻を計算
             let naive_datetime = match adjusted_date.and_hms_opt(hours as u32, minutes as u32, 0) {
                 Some(time) => time,
                 None => {
@@ -98,11 +88,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let datetime_utc = Utc.from_utc_datetime(&naive_datetime);
             let timestamp = datetime_utc.timestamp();
 
-            let existing_task: Option<Task> = query_as!(
-                Task,
+            let existing_task = sqlx::query_scalar!(
                 r#"
-                SELECT
-                    plan_id AS "plan_id: i32"
+                SELECT plan_id
                 FROM Task
                 WHERE plan_id = ? AND date = ?
                 "#,
