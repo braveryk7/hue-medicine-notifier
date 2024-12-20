@@ -8,7 +8,7 @@ docker-compose build web --no-cache
 
 # Step 2: web サービスの起動
 echo "Starting web service..."
-docker-compose up -d web --no-cache
+docker-compose up -d web
 
 # Step 3: app.db の生成を待機
 echo "Waiting for app.db to be generated..."
