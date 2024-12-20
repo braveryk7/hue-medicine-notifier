@@ -8,7 +8,11 @@ services:
     ports:
       - "52000:52000"
     environment:
+      - NODE_ENV=production
+      - BRIDGE_IP=${BRIDGE_IP}
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
       - DATABASE_URL=file:/data/app.db
+      - CERT_PATH=${CERT_PATH}
     volumes:
       - ./db:/data
 
