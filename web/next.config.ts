@@ -2,7 +2,9 @@ import type { NextConfig } from 'next';
 import path from 'path';
 import { config as dotenvConfig } from 'dotenv';
 
-dotenvConfig({ path: path.resolve(process.cwd(), '../.env') });
+if (process.env.NODE_ENV !== 'production') {
+  dotenvConfig({ path: path.resolve(process.cwd(), '../.env') });
+}
 
 const nextConfig: NextConfig = {
   webpack(config) {
