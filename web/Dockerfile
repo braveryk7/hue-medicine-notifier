@@ -10,6 +10,9 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 
+COPY prisma ./prisma
+RUN npx prisma generate --schema=prisma/schema.prisma
+
 COPY . .
 
 # 一時ディレクトリでデータベースを初期化
