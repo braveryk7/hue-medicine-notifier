@@ -2,6 +2,15 @@
 
 set -e
 
+# Step 0: db ディレクトリの存在確認または作成
+if [ ! -d ./db ]; then
+  echo "db directory does not exist. Creating it..."
+  mkdir -p ./db
+  echo "db directory created."
+else
+  echo "db directory already exists."
+fi
+
 # Step 1: web サービスのビルド
 echo "Building web service..."
 docker-compose build web --no-cache
