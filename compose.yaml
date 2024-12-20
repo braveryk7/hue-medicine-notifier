@@ -10,6 +10,7 @@ services:
     environment:
       - NODE_ENV=production
       - BRIDGE_IP=${BRIDGE_IP}
+      - BRIDGE_ID=${BRIDGE_ID}
       - ACCESS_TOKEN=${ACCESS_TOKEN}
       - DATABASE_URL=file:/data/app.db
       - CERT_PATH=${CERT_PATH}
