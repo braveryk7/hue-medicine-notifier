@@ -13,6 +13,7 @@ use tokio::sync::Mutex;
 
 #[derive(Debug)]
 struct Task {
+    id: i32,
     plan_id: i32,
     user_id: i32,
 }
@@ -27,12 +28,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Task,
         r#"
         SELECT 
-            plan_id AS "plan_id: i32",
+            Task.id AS "id: i32",
+            Task.plan_id AS "plan_id: i32",
             Plan.user_id AS "user_id: i32"
         FROM Task
         INNER JOIN Plan ON Task.plan_id = Plan.id
-        WHERE is_completed = false
-        "#,
+        INNER JOIN User ON Plan.user_id = User.id
+        WHERE 
+            is_completed = false AND
+            Task.date <= strftime('%s', 'now') AND
+            Task.date > strftime('%s', 'now', '-1 day');
+        "#
     )
     .fetch_all(&pool)
     .await?;
@@ -48,7 +54,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         SELECT 
             id AS "id: i32",
             light_id AS "light_id: String",
-            light_type AS "light_type: String"
+            light_type AS "light_type: String",
+            utc_offset AS "utc_offset: i32"
         FROM User
         WHERE is_deleted = false
         ORDER BY id
@@ -69,7 +76,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             let light_locks = Arc::clone(&light_locks);
 
             async move {
-                println!("task.plan_id: {}", task.plan_id);
+                println!("task.id: {}", task.id);
 
                 if let Some(user) = users_map.get(&task.user_id) {
                     let light_id = user.light_id.clone();
