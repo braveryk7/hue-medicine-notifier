@@ -27,13 +27,20 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
+ARG DATABASE_URL
+ARG BRIDGE_IP
+ARG ACCESS_TOKEN
+
+RUN echo "DATABASE_URL=${DATABASE_URL}" >> /etc/environment && \
+    echo "BRIDGE_IP=${BRIDGE_IP}" >> /etc/environment && \
+    echo "ACCESS_TOKEN=${ACCESS_TOKEN}" >> /etc/environment
+
 COPY --from=builder /app/target/release/hue_medicine_notifier /app/hue_medicine_notifier
 COPY --from=builder /app/target/release/scheduler /app/scheduler
 
-# cron 設定を一括で登録
 RUN mkdir -p /var/log/cron && \
-    echo "* * * * * /app/hue_medicine_notifier >> /var/log/cron/hue_medicine_notifier.log 2>&1" > /etc/cron.d/app_cron && \
-    echo "0 0 * * * /app/scheduler >> /var/log/cron/scheduler.log 2>&1" >> /etc/cron.d/app_cron && \
+    echo "* * * * * . /etc/environment && /app/hue_medicine_notifier >> /var/log/cron/hue_medicine_notifier.log 2>&1" > /etc/cron.d/app_cron && \
+    echo "0 0 * * * . /etc/environment && /app/scheduler >> /var/log/cron/scheduler.log 2>&1" >> /etc/cron.d/app_cron && \
     chmod 0644 /etc/cron.d/app_cron && \
     crontab /etc/cron.d/app_cron
 
