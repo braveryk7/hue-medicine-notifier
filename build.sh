@@ -23,7 +23,7 @@ docker-compose build web --no-cache
 
 # Step 2: web サービスの起動
 echo "Starting web service..."
-docker-compose up -d web
+docker-compose up -d --force-recreate web
 
 # Step 3: app.db の生成を待機
 echo "Waiting for app.db to be generated..."
@@ -39,6 +39,6 @@ docker-compose build processor
 
 # Step 5: processor サービスの起動
 echo "Starting processor service..."
-docker-compose up -d processor
+docker-compose up -d --force-recreate processor
 
 echo "All services have been successfully started."
