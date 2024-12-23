@@ -75,7 +75,8 @@ export default function Dashboard({ params }: { params: Promise<{ id: string }> 
       key: 'userName',
       title: (
         <>
-          ユーザー<Ruby kanji="名" ruby="めい"></Ruby>
+          ユーザー
+          <Ruby kanji="名" ruby="めい" />
         </>
       ),
       value: userData.name,
@@ -85,7 +86,8 @@ export default function Dashboard({ params }: { params: Promise<{ id: string }> 
       key: 'lightType',
       title: (
         <>
-          ライト<Ruby kanji="種別" ruby="しゅべつ"></Ruby>
+          ライト
+          <Ruby kanji="種別" ruby="しゅべつ" />
         </>
       ),
       value: userData.lightType,
@@ -94,9 +96,9 @@ export default function Dashboard({ params }: { params: Promise<{ id: string }> 
       key: 'planCount',
       title: (
         <>
-          <Ruby kanji="登録" ruby="とうろく"></Ruby>
+          <Ruby kanji="登録" ruby="とうろく" />
           プラン
-          <Ruby kanji="数" ruby="すう"></Ruby>
+          <Ruby kanji="数" ruby="すう" />
         </>
       ),
       value: plansData.length,
@@ -105,7 +107,8 @@ export default function Dashboard({ params }: { params: Promise<{ id: string }> 
       key: 'registeredAt',
       title: (
         <>
-          ユーザー<Ruby kanji="登録日" ruby="とうろくび"></Ruby>
+          ユーザー
+          <Ruby kanji="登録日" ruby="とうろくび" />
         </>
       ),
       value: new Date(userData.registeredAt).toLocaleDateString('ja-JP'),
