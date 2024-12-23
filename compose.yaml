@@ -21,6 +21,10 @@ services:
     build:
       context: ./
       dockerfile: ./processor/Dockerfile
+      args:
+        - BRIDGE_IP=${BRIDGE_IP}
+        - ACCESS_TOKEN=${ACCESS_TOKEN}
+        - DATABASE_URL=file:/data/app.db
     volumes:
       - ./db:/data
     depends_on:
