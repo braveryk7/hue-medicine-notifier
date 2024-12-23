@@ -14,6 +14,7 @@ use tokio::sync::Mutex;
 #[derive(Debug)]
 struct Task {
     plan_id: i32,
+    user_id: i32,
 }
 
 #[tokio::main]
@@ -26,8 +27,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Task,
         r#"
         SELECT 
-            plan_id AS "plan_id: i32"
+            plan_id AS "plan_id: i32",
+            Plan.user_id AS "user_id: i32"
         FROM Task
+        INNER JOIN Plan ON Task.plan_id = Plan.id
         WHERE is_completed = false
         "#,
     )
@@ -68,7 +71,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             async move {
                 println!("task.plan_id: {}", task.plan_id);
 
-                if let Some(user) = users_map.get(&task.plan_id) {
+                if let Some(user) = users_map.get(&task.user_id) {
                     let light_id = user.light_id.clone();
 
                     let lock = {
