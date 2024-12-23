@@ -54,8 +54,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         SELECT 
             id AS "id: i32",
             light_id AS "light_id: String",
-            light_type AS "light_type: String",
-            utc_offset AS "utc_offset: i32"
+            light_type AS "light_type: String"
         FROM User
         WHERE is_deleted = false
         ORDER BY id
