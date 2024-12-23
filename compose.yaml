@@ -23,6 +23,8 @@ services:
       dockerfile: ./processor/Dockerfile
     environment:
       - DATABASE_URL=file:/data/app.db
+      - BRIDGE_IP=${BRIDGE_IP}
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
     volumes:
       - ./db:/data
     depends_on:
