@@ -1,0 +1,26 @@
+{
+    "theme_color": "",
+    "background_color": "",
+    "icons": [
+        {
+            "purpose": "maskable",
+            "sizes": "512x512",
+            "src": "icon512_maskable.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "512x512",
+            "src": "icon512_rounded.png",
+            "type": "image/png"
+        }
+    ],
+    "orientation": "any",
+    "display": "minimal-ui",
+    "dir": "auto",
+    "lang": "ja",
+    "name": "お薬飲んでないとブチギレるゾ",
+    "short_name": "お薬飲んでないとブチギレるゾ",
+    "start_url": "/",
+    "scope": "/"
+}
