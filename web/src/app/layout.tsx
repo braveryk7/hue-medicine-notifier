@@ -21,12 +21,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: '/favicon.ico',
-        sizes: '64x64 32x32 24x24 16x16',
+        url: '/icons/favicon.ico',
+        sizes: 'any',
         type: 'image/x-icon',
       },
       {
-        url: '/icon512_maskable.png',
+        url: '/icons/icon512_maskable.png',
         sizes: '512x512',
         type: 'image/png',
       },
