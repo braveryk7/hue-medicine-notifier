@@ -2,7 +2,7 @@ import type { NextConfig } from 'next';
 import path from 'path';
 import { config as dotenvConfig } from 'dotenv';
 import { Configuration } from 'webpack';
-import nextPWA from 'next-pwa';
+import nextPWA from '@ducanh2912/next-pwa';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenvConfig({ path: path.resolve(process.cwd(), '../.env') });
@@ -10,9 +10,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 const withPWA = nextPWA({
   dest: 'public',
-  register: true,
-  skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
+  register: true,
+  workboxOptions: {
+    skipWaiting: true,
+    clientsClaim: true,
+  },
 });
 
 const nextConfig: NextConfig = withPWA({
