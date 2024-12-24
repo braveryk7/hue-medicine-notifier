@@ -39,7 +39,7 @@ const nextConfig: NextConfig = withPWA({
       },
     },
   },
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: process.env.NODE_ENV === 'development',
 });
 
 module.exports = nextConfig;
