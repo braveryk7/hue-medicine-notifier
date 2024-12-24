@@ -22,7 +22,9 @@ export const TaskForm = ({ user, plans }: { user: User; plans: Plan[] }) => {
   const fetchTasks = useCallback(async () => {
     try {
       const fetchedTasks = await getTask(userId);
-      setTasks(fetchedTasks);
+      const sortedTasks = fetchedTasks.sort((a, b) => a.date - b.date);
+
+      setTasks(sortedTasks);
       setIsLoading(false);
     } catch (error) {
       console.error('Failed to fetch tasks:', error);
@@ -46,6 +48,8 @@ export const TaskForm = ({ user, plans }: { user: User; plans: Plan[] }) => {
       ),
     );
   }, [plans]);
+
+  console.log('tasks:', tasks);
 
   const handleToggle = (taskId: number, isCompleted: boolean) => {
     setTasks((prevTasks) => prevTasks.map((task) => (task.id === taskId ? { ...task, isCompleted } : task)));
