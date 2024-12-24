@@ -10,30 +10,23 @@
     "prisma:studio": "prisma studio"
   },
   "dependencies": {
+    "@ducanh2912/next-pwa": "^10.2.9",
     "@prisma/client": "^6.0.1",
-    "chroma-js": "^3.1.2",
     "colorjs.io": "^0.5.2",
     "dotenv": "^16.4.7",
     "moment-timezone": "^0.5.46",
-    "next": "^15.0.4",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "next": "^15.1.2",
+    "node-fetch": "^3.3.2",
+    "tailwindcss": "^3.4.16"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^15.0.4",
     "@svgr/webpack": "^8.1.0",
-    "@types/node": "^22.10.1",
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.1",
-    "eslint": "^9.16.0",
+    "@types/react": "19.0.2",
     "eslint-config-next": "^15.0.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-tailwindcss": "^3.17.5",
-    "node-fetch": "^3.3.2",
-    "postcss": "^8",
+    "globals": "^15.14.0",
     "prettier": "^3.4.2",
-    "prisma": "^6.1.0",
-    "tailwindcss": "^3.4.16",
-    "typescript": "^5.7.2"
+    "prisma": "^6.1.0"
   }
 }
