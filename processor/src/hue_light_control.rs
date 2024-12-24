@@ -127,8 +127,6 @@ fn generate_body(args: GenerateBodyArgs) -> Value {
         "dimming": { "brightness": args.brightness },
     });
 
-    println!("args.light_type: {:?}", args.light_type);
-
     match &args.light_type {
         Some(light_type) => match light_type.as_str() {
             "color" => {
@@ -176,8 +174,6 @@ fn generate_body(args: GenerateBodyArgs) -> Value {
             );
         }
     }
-
-    println!("Body: {}", body);
 
     body
 }
@@ -231,8 +227,6 @@ async fn get_current_light_status(
     access_token: &str,
 ) -> Result<Option<Value>, Box<dyn std::error::Error>> {
     let url = connection::generate_url(light_id);
-
-    println!("url: {}", url);
 
     let client = reqwest::Client::builder()
         .danger_accept_invalid_certs(true)
