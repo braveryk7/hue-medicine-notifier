@@ -16,7 +16,7 @@
         }
     ],
     "orientation": "any",
-    "display": "minimal-ui",
+    "display": "standalone",
     "dir": "auto",
     "lang": "ja",
     "name": "お薬飲んでないとブチギレるゾ",
