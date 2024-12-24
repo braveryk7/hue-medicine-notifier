@@ -27,9 +27,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-ARG DATABASE_URL
-ARG BRIDGE_IP
-ARG ACCESS_TOKEN
+ARG DATABASE_URL BRIDGE_IP ACCESS_TOKEN
 
 RUN echo "DATABASE_URL=${DATABASE_URL}" >> /etc/environment && \
     echo "BRIDGE_IP=${BRIDGE_IP}" >> /etc/environment && \
