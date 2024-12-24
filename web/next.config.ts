@@ -1,17 +1,29 @@
 import type { NextConfig } from 'next';
 import path from 'path';
 import { config as dotenvConfig } from 'dotenv';
+import { Configuration } from 'webpack';
+import nextPWA from 'next-pwa';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenvConfig({ path: path.resolve(process.cwd(), '../.env') });
 }
 
-const nextConfig: NextConfig = {
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack'],
-    });
+const withPWA = nextPWA({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+});
+
+const nextConfig: NextConfig = withPWA({
+  reactStrictMode: true,
+  webpack(config: Configuration) {
+    if (config.module?.rules) {
+      config.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
+    }
     return config;
   },
   env: {
@@ -28,6 +40,6 @@ const nextConfig: NextConfig = {
     },
   },
   productionBrowserSourceMaps: true,
-};
+});
 
 module.exports = nextConfig;
