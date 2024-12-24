@@ -12,7 +12,7 @@ export default [
     ignores: ['lib/**/*.js', 'node_modules/**/*', '../processor/**/*'],
   },
   {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js'],
+    files: ['**/*.{ts,tsx,js,mjs}'],
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: 'module',
@@ -31,11 +31,6 @@ export default [
       '@next/next': nextPlugin,
       tailwindcss: tailwindPlugin,
     },
-    // settings: {
-    //   tailwindcss: {
-    //     config: './web/tailwind.config.ts',
-    //   },
-    // },
     rules: {
       // Base rules
       ...js.configs.recommended.rules,
