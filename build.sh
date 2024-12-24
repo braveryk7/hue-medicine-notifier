@@ -17,6 +17,13 @@ else
   echo "db directory already exists."
 fi
 
+# Step 1: web/cert/hue-bridge-cert.pem の存在確認
+if [ ! -f ./web/cert/hue-bridge-cert.pem ]; then
+  echo "Error: web/cert/hue-bridge-cert.pem file not found!"
+  echo "Please ensure the file exists before building."
+  exit 1
+fi
+
 # Step 1: web サービスのビルド
 echo "Building web service..."
 docker-compose build web --no-cache
