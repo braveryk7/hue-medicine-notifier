@@ -35,9 +35,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         INNER JOIN Plan ON Task.plan_id = Plan.id
         INNER JOIN User ON Plan.user_id = User.id
         WHERE 
-            is_completed = false AND
-            Task.date <= strftime('%s', 'now') AND
-            Task.date > strftime('%s', 'now', '-1 day');
+            Task.is_completed = false AND
+            Task.date >= (strftime('%s', 'now', 'start of day', 'utc') + (User.utc_offset * 60)) AND
+            Task.date <= strftime('%s', 'now', 'utc')
+        ORDER BY Task.date ASC
         "#
     )
     .fetch_all(&pool)
