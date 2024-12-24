@@ -38,7 +38,7 @@ COPY --from=builder /app/target/release/scheduler /app/scheduler
 
 RUN mkdir -p /var/log/cron && \
     echo "* * * * * . /etc/environment && /app/hue_medicine_notifier >> /var/log/cron/hue_medicine_notifier.log 2>&1" > /etc/cron.d/app_cron && \
-    echo "0 0 * * * . /etc/environment && /app/scheduler >> /var/log/cron/scheduler.log 2>&1" >> /etc/cron.d/app_cron && \
+    echo "* * * * * . /etc/environment && /app/scheduler >> /var/log/cron/scheduler.log 2>&1" >> /etc/cron.d/app_cron && \
     chmod 0644 /etc/cron.d/app_cron && \
     crontab /etc/cron.d/app_cron
 
